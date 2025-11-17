@@ -1,0 +1,35 @@
+{
+  "name": "xss-guardian",
+  "version": "1.0.0",
+  "description": "Sophisticated XSS detection tool with framework-specific analyzers and advanced DOM exploitation detection",
+  "main": "dist/xss-guardian.js",
+  "types": "dist/xss-guardian.d.ts",
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "xss",
+    "security",
+    "dom",
+    "vulnerability",
+    "aurelia",
+    "react",
+    "vue",
+    "angular",
+    "detection",
+    "security-testing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "ts-loader": "^9.4.0"
+  }
+}

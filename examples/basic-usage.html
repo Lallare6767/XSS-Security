@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XSS Guardian - Basic Usage Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 { color: #333; }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #5568d3;
+    }
+    .vulnerable-section {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+    .info {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ XSS Guardian - Basic Usage Example</h1>
+
+    <div class="info">
+      <strong>💡 Instructions:</strong>
+      <ol style="margin-left: 20px; margin-top: 10px;">
+        <li>Open the browser console (F12)</li>
+        <li>Click one of the buttons below to load and run XSS Guardian</li>
+        <li>View the detailed security report in the console</li>
+      </ol>
+    </div>
+
+    <div style="margin: 30px 0;">
+      <h2>Quick Actions</h2>
+      <button onclick="loadAndQuickScan()">🚀 Quick Scan</button>
+      <button onclick="loadAndDeepScan()">🔬 Deep Scan (with mutation testing)</button>
+      <button onclick="loadAndFrameworkScan()">🎯 Framework Scan</button>
+    </div>
+
+    <div class="vulnerable-section">
+      <h2>⚠️ Intentionally Vulnerable Elements (for testing)</h2>
+      <p>These elements contain common XSS patterns that XSS Guardian will detect:</p>
+
+      <!-- Dangerous innerHTML binding -->
+      <div id="dangerous-div"></div>
+
+      <!-- Event handler with potential XSS -->
+      <img src="invalid.jpg" onerror="console.log('Image error')" alt="test">
+
+      <!-- Link with javascript: protocol -->
+      <a href="javascript:void(0)">Dangerous Link</a>
+
+      <!-- Form with action -->
+      <form action="javascript:alert(1)">
+        <input type="text" name="search" value="">
+      </form>
+
+      <!-- Inline script with eval -->
+      <script>
+        // Dangerous: using eval
+        // eval('console.log("test")');
+
+        // Dangerous: innerHTML with user input
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('name')) {
+          // document.getElementById('dangerous-div').innerHTML = params.get('name');
+        }
+      </script>
+    </div>
+
+    <div class="info">
+      <strong>📊 What XSS Guardian Will Find:</strong>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Dangerous event handlers (onerror)</li>
+        <li>JavaScript protocol in links and forms</li>
+        <li>Inline scripts with dangerous patterns</li>
+        <li>DOM sinks connected to user-controlled sources</li>
+        <li>Framework-specific vulnerabilities</li>
+        <li>And much more...</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Load XSS Guardian from CDN or local build
+    function loadXSSGuardian(callback) {
+      if (window.XSSGuardian) {
+        console.log('✓ XSS Guardian already loaded');
+        callback();
+        return;
+      }
+
+      console.log('Loading XSS Guardian...');
+      const script = document.createElement('script');
+
+      // Try to load from local build first, fallback to CDN
+      script.src = '../dist/xss-guardian.js';
+      script.onerror = function() {
+        console.log('Local build not found, trying CDN...');
+        script.src = 'https://cdn.jsdelivr.net/gh/yourusername/xss-guardian@main/dist/xss-guardian.js';
+      };
+
+      script.onload = function() {
+        console.log('✓ XSS Guardian loaded successfully!');
+        callback();
+      };
+
+      document.head.appendChild(script);
+    }
+
+    function loadAndQuickScan() {
+      loadXSSGuardian(async () => {
+        console.clear();
+        console.log('%c🚀 Running Quick Scan...', 'color: #00ff00; font-size: 16px; font-weight: bold;');
+        const result = await window.XSSGuardian.quickScan();
+        console.log('%c✓ Scan complete! See results above.', 'color: #00ff00; font-weight: bold;');
+      });
+    }
+
+    function loadAndDeepScan() {
+      loadXSSGuardian(async () => {
+        console.clear();
+        console.log('%c🔬 Running Deep Scan...', 'color: #00ff00; font-size: 16px; font-weight: bold;');
+        console.log('%c⚠️  This may take a while and will temporarily modify the page', 'color: #ffa500;');
+        const result = await window.XSSGuardian.deepScan();
+        console.log('%c✓ Scan complete! See results above.', 'color: #00ff00; font-weight: bold;');
+      });
+    }
+
+    function loadAndFrameworkScan() {
+      loadXSSGuardian(async () => {
+        console.clear();
+        console.log('%c🎯 Running Framework Scan...', 'color: #00ff00; font-size: 16px; font-weight: bold;');
+        const result = await window.XSSGuardian.frameworkScan();
+        console.log('%c✓ Scan complete! See results above.', 'color: #00ff00; font-weight: bold;');
+      });
+    }
+
+    // Add some vulnerable patterns dynamically
+    window.addEventListener('DOMContentLoaded', function() {
+      // Simulate some potentially dangerous DOM manipulation
+      const div = document.getElementById('dangerous-div');
+      if (div) {
+        div.textContent = 'This div could be vulnerable to innerHTML injection';
+      }
+    });
+  </script>
+</body>
+</html>

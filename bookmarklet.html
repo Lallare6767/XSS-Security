@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XSS Guardian - Bookmarklet</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .section p {
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .bookmarklet-box {
+      background: #f8f9fa;
+      border: 2px dashed #667eea;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .bookmarklet-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 40px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: move;
+    }
+
+    .bookmarklet-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .instruction {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .feature {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+    }
+
+    .feature h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .feature p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .cdn-box {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .cdn-box h3 {
+      color: #856404;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛡️ XSS Guardian</h1>
+      <p>Advanced XSS Detection & Framework Analysis Tool</p>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <h2>Quick Start - Bookmarklet</h2>
+        <p>
+          The easiest way to use XSS Guardian is with our bookmarklet. Simply drag the button below
+          to your bookmarks bar, then click it on any website you want to scan!
+        </p>
+
+        <div class="bookmarklet-box">
+          <p style="margin-bottom: 20px; color: #667eea; font-weight: bold;">
+            Drag this button to your bookmarks bar:
+          </p>
+          <a href="javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/yourusername/xss-guardian@main/dist/xss-guardian.js';s.onload=function(){XSSGuardian.quickScan()};document.head.appendChild(s);})();" class="bookmarklet-button">
+            🛡️ XSS Guardian
+          </a>
+          <p style="margin-top: 20px; color: #666; font-size: 14px;">
+            Click the bookmarklet on any page to start scanning!
+          </p>
+        </div>
+
+        <div class="instruction">
+          <strong>📌 How to install:</strong>
+          <ol style="margin-left: 20px; margin-top: 10px;">
+            <li>Make sure your bookmarks bar is visible (Ctrl/Cmd + Shift + B)</li>
+            <li>Drag the "🛡️ XSS Guardian" button above to your bookmarks bar</li>
+            <li>Navigate to any website you want to scan</li>
+            <li>Click the bookmarklet in your bookmarks bar</li>
+            <li>View results in the browser console (F12)</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Manual Loading via Console</h2>
+        <p>
+          You can also load XSS Guardian directly in the browser console. Open the developer tools
+          (F12) and paste this code:
+        </p>
+
+        <div class="code-block">
+var script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/gh/yourusername/xss-guardian@main/dist/xss-guardian.js';
+script.onload = function() {
+  console.log('XSS Guardian loaded!');
+  XSSGuardian.quickScan();
+};
+document.head.appendChild(script);
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Usage Examples</h2>
+
+        <h3 style="color: #667eea; margin-bottom: 10px;">Quick Scan (Recommended)</h3>
+        <div class="code-block">
+// Run a quick scan
+const result = await XSSGuardian.quickScan();
+        </div>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">Deep Scan (with mutation testing)</h3>
+        <div class="code-block">
+// Run a comprehensive deep scan
+const result = await XSSGuardian.deepScan();
+        </div>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">Custom Scan</h3>
+        <div class="code-block">
+// Custom scan with specific options
+const result = await XSSGuardian.scan({
+  depth: 20,
+  includeShadowDOM: true,
+  includeIframes: true,
+  mutationTest: false,
+  payloadComplexity: 'advanced',
+  verbose: true
+});
+        </div>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">Export Report</h3>
+        <div class="code-block">
+// Export as HTML
+XSSGuardian.exportReport(result, 'html');
+
+// Export as JSON
+XSSGuardian.exportReport(result, 'json');
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Key Features</h2>
+        <div class="features">
+          <div class="feature">
+            <h3>🔍 DOM Analysis</h3>
+            <p>Deep inspection of DOM structure, attributes, and event handlers to detect XSS vectors</p>
+          </div>
+
+          <div class="feature">
+            <h3>🎯 Framework Detection</h3>
+            <p>Specialized analyzers for Aurelia, React, Vue, Angular, Alpine.js, and more</p>
+          </div>
+
+          <div class="feature">
+            <h3>🧪 Mutation Testing</h3>
+            <p>Active testing with payload injection to find reflected and DOM-based XSS</p>
+          </div>
+
+          <div class="feature">
+            <h3>💉 Comprehensive Payloads</h3>
+            <p>Extensive payload library with encoding, obfuscation, and WAF bypass techniques</p>
+          </div>
+
+          <div class="feature">
+            <h3>📊 Visual Reports</h3>
+            <p>Beautiful console output with color-coded severity levels and detailed findings</p>
+          </div>
+
+          <div class="feature">
+            <h3>💡 Remediation Advice</h3>
+            <p>Specific, actionable recommendations for fixing each vulnerability</p>
+          </div>
+
+          <div class="feature">
+            <h3>🌐 Shadow DOM Support</h3>
+            <p>Scans inside Shadow DOM and web components</p>
+          </div>
+
+          <div class="feature">
+            <h3>📥 Export Options</h3>
+            <p>Export reports as HTML or JSON for documentation and tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>NPM Installation</h2>
+        <p>For integration into your development workflow:</p>
+
+        <div class="code-block">
+npm install xss-guardian
+        </div>
+
+        <p style="margin-top: 15px;">Then in your code:</p>
+
+        <div class="code-block">
+import XSSGuardian from 'xss-guardian';
+
+// Run scan
+const guardian = XSSGuardian.create();
+const result = await guardian.scan();
+        </div>
+      </div>
+
+      <div class="cdn-box">
+        <h3>⚠️ Important Security Notice</h3>
+        <p style="color: #856404; margin-bottom: 10px;">
+          XSS Guardian is a security testing tool intended for:
+        </p>
+        <ul style="margin-left: 20px; color: #856404;">
+          <li>Testing your own applications</li>
+          <li>Authorized security audits</li>
+          <li>Educational purposes</li>
+          <li>Bug bounty programs (with permission)</li>
+        </ul>
+        <p style="color: #856404; margin-top: 10px;">
+          Always obtain proper authorization before testing any website you don't own.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
