@@ -69,7 +69,7 @@ Open the browser console (F12) and paste:
 
 ```javascript
 var script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/gh/yourusername/xss-guardian@main/dist/xss-guardian.js';
+script.src = 'https://cdn.jsdelivr.net/gh/Lallare6767/xss-guardian@main/dist/xss-guardian.js';
 script.onload = function() {
   XSSGuardian.quickScan();
 };
